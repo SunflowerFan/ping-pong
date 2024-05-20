@@ -1,0 +1,124 @@
+//variaveis da bolinha
+let xbol=300;
+let ybol=200;
+let diam=20;
+let velxbol=3;
+let velybol=3;
+let raio = diam/2
+
+//variaveis da raquete
+let xrect = 5;
+let yrect = 150;
+let rectcomp = 10;
+let recttalt = 90;
+
+//variáveis oponente
+let xoponente = 585;
+let yoponente = 150;
+let veloponente;
+
+//pontuação
+let meuspontos = 0;
+let oponentepontos = 0;
+
+function setup() {
+  createCanvas(600, 400);
+}
+
+function draw() {
+  background(2);
+  mostrabol();
+  movimentobol();
+  colisaoborda();
+  movimentomyrect ();
+  movimentooponenterect ();
+  mostrarrect (xrect, yrect);
+  mostrarrect (xoponente, yoponente);
+  colisaorect();
+  colisaorectoponente ();
+  incluipontos ();
+  placar ();
+}
+
+function mostrabol (){
+  circle (xbol, ybol, diam);
+}
+
+function movimentobol ()
+{
+  xbol = xbol + velxbol;
+  ybol = ybol + velybol;
+}
+
+function colisaoborda ()
+{
+   if (xbol +raio >width||xbol - raio<0)
+  {velxbol *=-1;}
+  
+  if (ybol +raio>height||ybol - raio<0)
+  {velybol *=-1;}  
+  
+}
+
+function mostrarrect (x, y)
+{
+  rect (x, y, rectcomp, recttalt);
+}
+
+function movimentomyrect ()
+{
+  if (keyIsDown(87))
+    {
+      yrect -= 10;
+    }
+  if (keyIsDown(83))
+    {
+      yrect += 10;
+    }
+  
+}
+function colisaorect ()
+{
+  if (xbol-raio< xrect+rectcomp && ybol-raio<yrect+recttalt && ybol+raio > yrect)
+  {
+    velxbol *= -1;
+  }
+}
+function movimentooponenterect ()
+  {
+if (keyIsDown(UP_ARROW))
+    {
+      yoponente -= 10;
+    }
+  if (keyIsDown(DOWN_ARROW))
+    {
+      yoponente += 10;
+    }  }
+
+function colisaorectoponente ()
+{
+  if (xbol-raio > xoponente-rectcomp && ybol-raio < yoponente+recttalt && ybol-raio > yoponente)
+ {
+   velxbol *= -1;
+ }
+}
+
+function incluipontos ()
+{
+  fill (255);
+  textSize (25);
+  text (meuspontos, 250, 25);
+  text (oponentepontos, 350, 25);
+}
+
+function placar ()
+{
+  if (xbol>590)
+    {
+      meuspontos +=1;
+    }
+  if (xbol<10)
+    {
+      oponentepontos +=1;
+    }
+}
